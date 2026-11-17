@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+
+<h2>Book a Tee Time</h2>
+<form action="/book" method="POST">
+  <div>
+    <label>Round Option:</label>
+    <select name="roundID" required>
+      <% for (let i = 0; i < rounds.length; i++) { %>
+        <option value="<%= rounds[i].roundID %>">
+          <%= rounds[i].name %> (<%= rounds[i].holes %> holes - $<%= rounds[i].price %>)
+        </option>
+      <% } %>
+    </select>
+  </div>
+
+  <div>
+    <label>Tee Time:</label>
+    <select name="teetimeID" required>
+      <% for (let i = 0; i < teeTimes.length; i++) { %>
+        <option value="<%= teeTimes[i].teetimeID %>">
+          <%= teeTimes[i].date %> at <%= teeTimes[i].time %> (<%= teeTimes[i].openspots %> spots left)
+        </option>
+      <% } %>
+    </select>
+  </div>
+
+  <div>
+    <label>Rental Equipment (Optional):</label>
+    <select name="equipmentID">
+      <option value="">None ($0)</option>
+      <% for (let i = 0; i < equipments.length; i++) { %>
+        <option value="<%= equipments[i].EquipmentID %>">
+          <%= equipments[i].name %> (+$<%= equipments[i].price %>)
+        </option>
+      <% } %>
+    </select>
+  </div>
+
+  <button type="submit">Confirm Booking</button>
+</form>
+
+<%- include('partials/footer') %>

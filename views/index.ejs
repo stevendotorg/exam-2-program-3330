@@ -1,6 +1,17 @@
-<%- include ('partials/header') %>
+<%- include('partials/header') %>
 
-<h1>Golf Links booking portal and manager</h1>
-<a href="/book" class="btn">Book A tee time</a>
+<h1>Welcome to Golf Links!!</h1>
+<p>Book or Manage Tee times</p>
+
+<img src="/images/golfcourse.jpg" class ='home-banner'>
+
+<% if (!currentUser) { %>
+  <p><a href="/login">Log in or Register
+  </a></p>
+<% } else if (currentUser.role === 'golfer') { %>
+  <p><a href="/book">Book a Tee Time</a> | <a href="/booking">View My Bookings</a></p>
+<% } else { %>
+  <p><a href="/manager">Go to Manager Dashboard</a></p>
+<% } %>
 
 <%- include('partials/footer') %>

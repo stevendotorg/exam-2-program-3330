@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+
+<h2>My Booking</h2>
+<p>Need to cancel a reservation? Please call a club manager to cancel it for you.</p>
+
+<% if (!booking) { %>
+  <p>You have no reservation yet. <a href="/book">Book a tee time now!</a></p>
+<% } else { %>
+  <table border="1">
+    <tr>
+      <th>ID</th>
+      <th>Round</th>
+      <th>Date & Time</th>
+      <th>Equipment</th>
+      <th>Total Cost</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td><%= booking.ReservationID %></td>
+      <td><%= booking.round.name %></td>
+      <td><%= booking.teetime.date %> - <%= booking.teetime.time %></td>
+      <td>
+        <% if (booking.equipment) { %>
+          <%= booking.equipment.name %>
+        <% } else { %>
+          None
+        <% } %>
+      </td>
+      <td>$<%= booking.totalcost %></td>
+      <td><%= booking.status %></td>
+    </tr>
+  </table>
+<% } %>
+
+<%- include('partials/footer') %>

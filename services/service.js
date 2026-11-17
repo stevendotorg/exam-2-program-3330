@@ -83,8 +83,8 @@ function createBooking(UserID, roundID,teetimeID,equipmentID){
     return booking;
 }
 
-function GetBooking(UserID){
-    return Reservations.filter(x => x.user.UserID === Number(UserID));
+function GetBooking(UserID) {
+  return Reservations.find(x => x.user.UserID === Number(UserID));
 }
 
 function GetBookings(){

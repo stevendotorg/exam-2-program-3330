@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+
+<h2>Existing User Login</h2>
+<form action="/login" method="POST">
+  <label>Select Account:</label>
+  <select name="userId" required>
+    <% for (let i = 0; i < users.length; i++) { %>
+      <option value="<%= users[i].UserID %>">
+        <%= users[i].name %> (<%= users[i].role %>)
+      </option>
+    <% } %>
+  </select>
+  <button type="submit">Log In</button>
+</form>
+
+<hr>
+
+<h2>Register New Account</h2>
+<form action="/register" method="POST">
+  <div>
+    <label>Name:</label>
+    <input type="text" name="name" required>
+  </div>
+  <div>
+    <label>Email:</label>
+    <input type="email" name="email" required>
+  </div>
+  <div>
+    <label>Role:</label>
+    <select name="role">
+      <option value="golfer">Golfer</option>
+      <option value="manager">Manager</option>
+    </select>
+  </div>
+  <button type="submit">Register</button>
+</form>
+
+<%- include('partials/footer') %>

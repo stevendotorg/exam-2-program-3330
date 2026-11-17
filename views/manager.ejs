@@ -1,0 +1,44 @@
+<%- include('partials/header') %>
+
+<h2>Manager Dashboard</h2>
+
+<% if (bookings.length === 0) { %>
+  <p>No reservations have been made yet.</p>
+<% } else { %>
+  <table border="1" cellpadding="8">
+    <tr>
+      <th>ID</th>
+      <th>Golfer</th>
+      <th>Round</th>
+      <th>Date & Time</th>
+      <th>Equipment</th>
+      <th>Total</th>
+      <th>Status</th>
+      <th>Update Status</th>
+    </tr>
+    <% for (let i = 0; i < bookings.length; i++) { %>
+      <tr>
+        <td><%= bookings[i].ReservationID %></td>
+        <td><%= bookings[i].user.name %></td>
+        <td><%= bookings[i].round.name %></td>
+        <td><%= bookings[i].teetime.date %> - <%= bookings[i].teetime.time %></td>
+        <td><%= bookings[i].equipment ? bookings[i].equipment.name : 'None' %></td>
+        <td>$<%= bookings[i].totalcost %></td>
+        <td><%= bookings[i].status %></td>
+        <td>
+          <form action="/manager/update" method="POST">
+            <input type="hidden" name="ReservationID" value="<%= bookings[i].ReservationID %>">
+            <select name="status">
+              <option value="upcoming" <%= bookings[i].status === 'upcoming' ? 'selected' : '' %>>Upcoming</option>
+              <option value="complete" <%= bookings[i].status === 'complete' ? 'selected' : '' %>>Complete</option>
+              <option value="canceled" <%= bookings[i].status === 'canceled' ? 'selected' : '' %>>Canceled</option>
+            </select>
+            <button type="submit">Save</button>
+          </form>
+        </td>
+      </tr>
+    <% } %>
+  </table>
+<% } %>
+
+<%- include('partials/footer') %>
