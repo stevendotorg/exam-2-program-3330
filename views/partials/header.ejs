@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Golf Links</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+<body>
+    <header class="navbar">
+        <nav class="navlinks">
+            <a href="/">Home</a>
+            <a href="/book">Book a Tee Time</a>
+            <a href="/booking">My Bookings</a>
+            <a href="/manager">Manager</a>
+            
+
+        <div class="nav-user">
+            <% if (typeof currentUser !== 'undefined' && currentUser){ %>
+            <span><%=currentUser.name %>(<%= currentUser.role %>)</span>
+            <a href="/logout" class="nav-log-link">Log Out</a>
+            <% } else { %>
+                <a href="/login" class="nav-log-link">Log in</a>
+            <% } %>
+            
+        </div>
+        </nav>
+    </header>
+    <main class="container">
