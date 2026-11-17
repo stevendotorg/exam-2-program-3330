@@ -1,4 +1,3 @@
-const { name } = require('ejs');
 const obj = require('./models');
 
 const Users = [
@@ -46,3 +45,61 @@ function Register(name, email, role){
     Users.push(newuser);
     return newuser;
 }
+
+function getRounds(){
+    return RoundOptions;
+}
+
+function getTeeTimes(){
+    return TeeTimes;
+}
+
+function getEquipment(){
+    return Equipments;
+}
+
+function createBooking(UserID, roundID,teetimeID,equipmentID){
+    const user = getUserbyID(UserID);
+    const round = RoundOptions.find(x => x.roundID === Number(roundID));
+    const teetime = TeeTimes.find(x => x.teetimeID === Number(teetimeID));
+    const equipment = equipmentID ? Equipments.find (x => x.EquipmentID === Number(equipmentID)) : null;
+
+    if (!user){
+        throw new Error("Must be logged in");
+    }
+
+    if (!round || !teetime) {
+        throw new Error("Please make a valid selection");
+    }
+    if (teetime.openspots <= 0){
+        throw new Error("Tee Time is full");
+    }
+
+    const totalcost = round.price + (equipment ? equipment.price : 0);
+    teetime.openspots--;
+
+    const booking = new obj.Reservation(Reservations.length + 1, user, round, teetime, equipment, totalcost, 'upcoming');
+    Reservations.push(booking);
+    return booking;
+}
+
+function GetBooking(UserID){
+    return Reservations.filter(x => x.user.UserID === Number(UserID));
+}
+
+function GetBookings(){
+    return Reservations;
+}
+
+function updateBooking(ReservationID, status){
+    const booking = Reservations.find(x => x.ReservationID === Number(ReservationID));
+    if(!booking) {
+        throw new Error("Booking not found");
+    }
+    if (status === 'canceled'){
+        booking.teetime.openspots++;
+    }
+    booking.status = status;
+}
+
+module.exports = {getUsers, getUserbyID, Register, getRounds,getTeeTimes, getEquipment, createBooking, GetBooking, GetBookings, updateBooking};
